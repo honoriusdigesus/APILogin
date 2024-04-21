@@ -1,6 +1,5 @@
 package io.crud.loginv2.exception;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,6 +25,13 @@ public class ErrorHandler {
     public ResponseEntity<ErrorResponse> handleInvalidUserNameException(InvalidUserNameException ex) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         ErrorResponse error = new ErrorResponse(102, "NAME_CANNOT_BE_BLANK", ex.getMessage());
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException ex) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        ErrorResponse error = new ErrorResponse(103, "USER_NOT_FOUND", ex.getMessage());
         return ResponseEntity.status(status).body(error);
     }
 }
