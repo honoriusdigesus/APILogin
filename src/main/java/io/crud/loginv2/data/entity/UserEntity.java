@@ -1,9 +1,6 @@
 package io.crud.loginv2.data.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
@@ -16,6 +13,9 @@ public class UserEntity {
     private String username;
     private String email;
     private String password;
+
+    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private SessionEntity session;
 
     public UserEntity() {
     }

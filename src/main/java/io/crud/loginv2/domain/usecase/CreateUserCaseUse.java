@@ -10,12 +10,12 @@ import io.crud.loginv2.utils.Validator;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CreateUserCaseUses {
+public class CreateUserCaseUse {
     private final UserRepositoryJPA userRepository;
     private final UserMapper userMapper;
     private final Validator validator;
 
-    public CreateUserCaseUses(UserRepositoryJPA userRepository, UserMapper userMapper, Validator validator) {
+    public CreateUserCaseUse(UserRepositoryJPA userRepository, UserMapper userMapper, Validator validator) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.validator = validator;

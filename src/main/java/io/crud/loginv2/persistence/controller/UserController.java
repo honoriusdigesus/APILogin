@@ -1,24 +1,26 @@
 package io.crud.loginv2.persistence.controller;
 
-import io.crud.loginv2.domain.usecase.CreateUserCaseUses;
+import io.crud.loginv2.domain.usecase.CreateUserCaseUse;
+import io.crud.loginv2.domain.usecase.DeleteUserCaseUse;
 import io.crud.loginv2.persistence.mapper.UserPresenterMapper;
 import io.crud.loginv2.persistence.model.UserPresenter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("user")
 public class UserController {
-    private final CreateUserCaseUses createUserCaseUses;
+    private final CreateUserCaseUse createUserCaseUses;
     private final UserPresenterMapper userPresenterMapper;
+    private final DeleteUserCaseUse deleteUserCaseUses;
 
-    public UserController(CreateUserCaseUses createUserCaseUses, UserPresenterMapper userPresenterMapper) {
+    public UserController(CreateUserCaseUse createUserCaseUses, UserPresenterMapper userPresenterMapper, DeleteUserCaseUse deleteUserCaseUses) {
         this.createUserCaseUses = createUserCaseUses;
         this.userPresenterMapper = userPresenterMapper;
+        this.deleteUserCaseUses = deleteUserCaseUses;
     }
 
     @PostMapping("/create")
@@ -26,5 +28,12 @@ public class UserController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(userPresenterMapper.fromDomainToPresenter(createUserCaseUses.createUser(userPresenterMapper.fromPresenterToDomain(userPresenter))));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<UserPresenter> delete(@PathVariable UUID id) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userPresenterMapper.fromDomainToPresenter(deleteUserCaseUses.deleteUser(id)));
     }
 }

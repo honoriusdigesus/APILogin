@@ -1,6 +1,7 @@
 package io.crud.loginv2.data.repository;
 
 import io.crud.loginv2.data.entity.UserEntity;
+import io.crud.loginv2.domain.model.UserDomain;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
