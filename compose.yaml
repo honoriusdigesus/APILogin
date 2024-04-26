@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  mi-contenedor-persistente:
+    image: postgres
+    volumes:
+      - mi-volumen-persistente:/app/datos
+    ports:
+      - "5432:5432" # Puerto predeterminado de PostgreSQL
+    environment:
+      POSTGRES_PASSWORD: postgres # Contraseña para ingresar a la base de datos
+      POSTGRES_USER: postgres # Usuario predeterminado de PostgreSQL
+      POSTGREST_DB: db
+#    command: ["postgres", "-c", "listen=all"] # Comando para iniciar PostgreSQL
+
+volumes:
+  mi-volumen-persistente:
+

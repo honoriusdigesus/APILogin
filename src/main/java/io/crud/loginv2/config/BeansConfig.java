@@ -4,6 +4,7 @@ import io.crud.loginv2.data.repository.SessionRepositoryJPA;
 import io.crud.loginv2.data.repository.UserRepositoryJPA;
 import io.crud.loginv2.domain.mapper.SessionMapper;
 import io.crud.loginv2.domain.mapper.UserMapper;
+import io.crud.loginv2.domain.usecase.CreateSessionCaseUse;
 import io.crud.loginv2.domain.usecase.CreateUserCaseUse;
 import io.crud.loginv2.domain.usecase.DeleteUserCaseUse;
 import io.crud.loginv2.domain.usecase.InitSessionCaseUse;
@@ -25,8 +26,16 @@ public class BeansConfig {
     }
 
     @Bean
-    public InitSessionCaseUse initSessionCaseUse(SessionRepositoryJPA sessionRepositoryJPA, UserRepositoryJPA userRepositoryJPA, SessionMapper sessionMapper, Validator validator){
-        return new InitSessionCaseUse(sessionRepositoryJPA, userRepositoryJPA, sessionMapper, validator);
+    public InitSessionCaseUse initSessionCaseUse(
+            SessionRepositoryJPA sessionRepositoryJPA,
+            UserRepositoryJPA userRepositoryJPA,
+            SessionMapper sessionMapper,
+            CreateSessionCaseUse createSessionCaseUse){
+        return new InitSessionCaseUse(
+                sessionRepositoryJPA,
+                userRepositoryJPA,
+                sessionMapper,
+                createSessionCaseUse);
     }
 
     @Bean

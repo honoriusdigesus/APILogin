@@ -20,13 +20,13 @@ public class InitSessionCaseUse {
     private final SessionRepositoryJPA sessionRepositoryJPA;
     private final UserRepositoryJPA userRepositoryJPA;
     private final SessionMapper sessionMapper;
-    private final Validator validator;
+    private final CreateSessionCaseUse createSessionCaseUse;
 
-    public InitSessionCaseUse(SessionRepositoryJPA sessionRepositoryJPA, UserRepositoryJPA userRepositoryJPA, SessionMapper sessionMapper, Validator validator) {
+    public InitSessionCaseUse(SessionRepositoryJPA sessionRepositoryJPA, UserRepositoryJPA userRepositoryJPA, SessionMapper sessionMapper, CreateSessionCaseUse createSessionCaseUse) {
         this.sessionRepositoryJPA = sessionRepositoryJPA;
         this.userRepositoryJPA = userRepositoryJPA;
         this.sessionMapper = sessionMapper;
-        this.validator = validator;
+        this.createSessionCaseUse = createSessionCaseUse;
     }
 
 
@@ -49,9 +49,9 @@ public class InitSessionCaseUse {
                 if (sessionEntity.getEndTime().isBefore(currentTime)) {
                     sessionEntity.setStartTime(currentTime);
                     sessionEntity.setEndTime(currentTime.plusMinutes(5));
-                    SessionEntity sessionUpdate = sessionRepositoryJPA.save(sessionEntity);
+                    //SessionEntity sessionUpdate = sessionRepositoryJPA.save(sessionEntity);
                     System.out.println("Session updated successfully.");
-                    return Optional.ofNullable(sessionMapper.fromSessionEntityToDomain(sessionUpdate));
+                    return Optional.ofNullable(createSessionCaseUse.createSession(sessionMapper.fromSessionEntityToDomain(sessionEntity)));
                 } else {
                     long minutesUntilExpiration = ChronoUnit.MINUTES.between(currentTime, sessionEntity.getEndTime());
                     System.out.println("Session is valid and expires in " + minutesUntilExpiration + " minutes");
@@ -63,7 +63,7 @@ public class InitSessionCaseUse {
                 mySession.setStartTime(LocalDateTime.now());
                 mySession.setEndTime(LocalDateTime.now().plusMinutes(5));
                 mySession.setUserEntity(userFound.get());
-                SessionEntity sessionUpdate = sessionRepositoryJPA.save(mySession);
+                createSessionCaseUse.createSession(sessionMapper.fromSessionEntityToDomain(mySession));
                 System.out.println("Session created successfully.");
                 return Optional.ofNullable(sessionMapper.fromSessionEntityToDomain(mySession));
             }
