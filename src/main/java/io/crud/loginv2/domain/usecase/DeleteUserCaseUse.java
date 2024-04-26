@@ -6,7 +6,6 @@ import io.crud.loginv2.domain.mapper.UserMapper;
 import io.crud.loginv2.domain.model.UserDomain;
 import io.crud.loginv2.exception.UserNotFoundException;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public class DeleteUserCaseUse {

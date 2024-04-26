@@ -4,10 +4,8 @@ import io.crud.loginv2.data.repository.SessionRepositoryJPA;
 import io.crud.loginv2.data.repository.UserRepositoryJPA;
 import io.crud.loginv2.domain.mapper.SessionMapper;
 import io.crud.loginv2.domain.mapper.UserMapper;
-import io.crud.loginv2.domain.usecase.CreateSessionCaseUse;
-import io.crud.loginv2.domain.usecase.CreateUserCaseUse;
-import io.crud.loginv2.domain.usecase.DeleteUserCaseUse;
-import io.crud.loginv2.domain.usecase.InitSessionCaseUse;
+import io.crud.loginv2.domain.model.UserDomain;
+import io.crud.loginv2.domain.usecase.*;
 import io.crud.loginv2.utils.Validator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,4 +41,8 @@ public class BeansConfig {
         return new DeleteUserCaseUse(userRepositoryJPA, userMapper);
     }
 
+    @Bean
+    public SearchUserUseCase searchUser(UserRepositoryJPA userRepositoryJPA, UserMapper userMapper){
+        return new SearchUserUseCase(userRepositoryJPA, userMapper);
+    }
 }
