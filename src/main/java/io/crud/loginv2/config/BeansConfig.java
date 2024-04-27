@@ -45,4 +45,9 @@ public class BeansConfig {
     public SearchUserUseCase searchUser(UserRepositoryJPA userRepositoryJPA, UserMapper userMapper){
         return new SearchUserUseCase(userRepositoryJPA, userMapper);
     }
+
+    @Bean
+    public UpdateUserCaseUse updateUserCaseUse(UserRepositoryJPA userRepository, UserMapper userMapper, SearchUserUseCase searchUserUseCase){
+        return new UpdateUserCaseUse(userRepository, userMapper, searchUserUseCase);
+    }
 }
