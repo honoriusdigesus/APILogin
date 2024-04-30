@@ -1,18 +1,29 @@
-version: "3.9"
+
+version: '3.8'
 
 services:
-  mi-contenedor-persistente:
-    image: postgres
-    volumes:
-      - mi-volumen-persistente:/app/datos
+  db:
+    container_name: postgres_database
+    image: postgres:16
     ports:
-      - "5432:5432" # Puerto predeterminado de PostgreSQL
+      - 5432:5432
+    volumes:
+      - postgres-db:/var/lib/postgresql/data  # Ruta completa al directorio de datos
     environment:
-      POSTGRES_PASSWORD: postgres # Contraseña para ingresar a la base de datos
-      POSTGRES_USER: postgres # Usuario predeterminado de PostgreSQL
-      POSTGREST_DB: db
-#    command: ["postgres", "-c", "listen=all"] # Comando para iniciar PostgreSQL
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db
+
+  pgAdmin:
+    depends_on:
+      - db
+    image: dpage/pgadmin4:8.5
+    ports:
+      - 8080:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=honoriodigesus@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=postgres
 
 volumes:
-  mi-volumen-persistente:
-
+  postgres-db:  # Nombre del volumen externo
+    external: true
