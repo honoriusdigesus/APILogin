@@ -22,7 +22,7 @@ public class CreateUserCaseUse {
     }
 
     public UserDomain createUser(UserDomain userDomain){
-        if (validator.isValidEmail(userDomain.email()) == false || userDomain.email().isBlank() ||userDomain.email().isBlank()){
+        if (validator.isValidEmail(userDomain.email()) == false || userDomain.email().isBlank() ||userDomain.email().isBlank() ||userDomain.email() == null){
             throw new InvalidEmailFormatException("Invalid email format: "+userDomain.email());
         }
 
